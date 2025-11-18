@@ -13,102 +13,162 @@
         justify-content: center;
         align-items: center;
         font-family: 'Arial', sans-serif;
-        background: #0a0a0a;
+        background: radial-gradient(circle at top, #080b1d, #000);
         overflow: hidden;
         color: #f5e042;
     }
 
+    /* Fundo de estrelas criptografadas */
+    .stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://i.imgur.com/3u3zKQh.png');
+        opacity: 0.25;
+        animation: moveStars 80s linear infinite;
+        z-index: -3;
+    }
+
+    @keyframes moveStars {
+        from { transform: translateY(0); }
+        to { transform: translateY(-2000px); }
+    }
+
+    /* Partículas animadas */
     canvas#bgCanvas {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: -1;
+        z-index: -2;
     }
 
     h1 {
-        font-size: 3em;
-        text-shadow: 0 0 10px #42f5a1, 0 0 20px #42f5a1;
+        font-size: 3.5em;
+        text-shadow: 0 0 15px #42f5a1, 0 0 30px #42f5a1;
         margin-bottom: 20px;
+        letter-spacing: 2px;
     }
 
     p {
         font-size: 1.5em;
         margin-bottom: 30px;
-        text-shadow: 0 0 5px #f5e042;
+        text-shadow: 0 0 8px #f5e042;
     }
 
+    /* Botões maiores */
     .btn {
         display: inline-block;
-        padding: 15px 30px;
+        padding: 18px 40px;
         margin: 10px;
-        border-radius: 12px;
+        border-radius: 14px;
         font-weight: bold;
         text-decoration: none;
-        color: #0a0a0a;
+        color: #080b1d;
         background: #42f5a1;
+        font-size: 1.3em;
         transition: all 0.3s ease;
     }
 
     .btn:hover {
         transform: scale(1.1);
         background: #f5e042;
+        box-shadow: 0 0 15px #42f5a1;
     }
 
-    .contract {
+    /* Caixa do contrato com botão copiar */
+    .contract-box {
         margin-top: 40px;
-        font-size: 1em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #contractText {
+        font-size: 1.2em;
+        padding: 12px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.2);
         color: #42f5a1;
+        text-shadow: 0 0 6px #42f5a1;
         word-break: break-all;
+        max-width: 90%;
         text-align: center;
     }
 
+    #copyBtn {
+        padding: 12px 25px;
+        border: none;
+        background: #42f5a1;
+        font-size: 1.1em;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #000;
+        transition: 0.3s;
+    }
+
+    #copyBtn:hover {
+        background: #f5e042;
+        box-shadow: 0 0 12px #42f5a1;
+    }
 </style>
 </head>
 <body>
 
+<div class="stars"></div>
+<canvas id="bgCanvas"></canvas>
+
 <h1>Bem-vindo ao site oficial do $Tiburcio</h1>
 <p>Luz, energia positiva e comunidade espiritual.</p>
 
-<!-- Botões interativos -->
+<!-- Botões -->
 <a class="btn" href="https://t.me/Tiburciomestreensiandor" target="_blank">Telegram Oficial</a>
 <a class="btn" href="https://www.tiktok.com/@mestreensinador?_r=1&_t=ZS-91Twdwh4uH7" target="_blank">TikTok Oficial</a>
 <a class="btn" href="https://x.com/metsre2255?t=oaBdBAdf9XBqihZR2aASVw&s=09" target="_blank">X Oficial</a>
 <a class="btn" href="https://www.instagram.com/mestre_ensinador1?igsh=MWV3OGYwNTVtc3JzeQ==" target="_blank">Instagram Oficial</a>
 <a class="btn" href="https://dexscreener.com/solana/DQ2zyRpBvA4CEgxfzKy2n8cXRnqMAYd9LwCtP3ZEo6Pu" target="_blank">Ver no DexScreener</a>
 
-<!-- Endereço do contrato -->
-<div class="contract">
-<b>Endereço do contrato $Tiburcio:</b><br>
-BBogUQD1TjEQrXeUjJRGft7hLB7EEVmTwanEsoPmpump
+<!-- Contrato -->
+<div class="contract-box">
+    <div id="contractText">BBogUQD1TjEQrXeUjJRGft7hLB7EEVmTwanEsoPmpump</div>
+    <button id="copyBtn" onclick="copyContract()">Copiar Contrato</button>
 </div>
 
-<!-- Canvas de fundo animado -->
-<canvas id="bgCanvas"></canvas>
-
 <script>
+function copyContract() {
+    const text = document.getElementById("contractText").innerText;
+    navigator.clipboard.writeText(text);
+    alert("Contrato copiado!");
+}
+
+/* Partículas animadas */
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const particles = [];
-const particleCount = 150;
+const particleCount = 170;
 
 for (let i=0; i<particleCount; i++){
     particles.push({
         x: Math.random()*canvas.width,
         y: Math.random()*canvas.height,
-        vx: (Math.random()-0.5)*1.5,
-        vy: (Math.random()-0.5)*1.5,
+        vx: (Math.random()-0.5)*1.4,
+        vy: (Math.random()-0.5)*1.4,
         size: Math.random()*2+1,
         color: `hsl(${Math.random()*360}, 80%, 60%)`
     });
 }
 
 function animate(){
-    ctx.fillStyle = 'rgba(10,10,10,0.3)';
+    ctx.fillStyle = 'rgba(10,10,10,0.25)';
     ctx.fillRect(0,0,canvas.width,canvas.height);
 
     for (let p of particles){
