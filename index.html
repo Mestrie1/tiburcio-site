@@ -127,55 +127,53 @@ function copyContract() {
     alert("Contrato copiado!");
 }
 
-/* Fundo animado de estrelas com profundidade */
-const canvas = document.getElementById('bgCanvas');
-const ctx = canvas.getContext('2d');
+// Fundo animado de estrelas
+window.addEventListener('load', () => {
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
 
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
 
-const stars = [];
-const STAR_COUNT = 300;
+    const stars = [];
+    const STAR_COUNT = 300;
 
-// Criar estrelas
-for(let i=0; i<STAR_COUNT; i++){
-    stars.push({
-        x: Math.random()*width,
-        y: Math.random()*height,
-        z: Math.random()*1, // profundidade
-        size: Math.random()*1.5 + 0.5,
-        speed: Math.random()*0.5 + 0.2
-    });
-}
-
-function draw(){
-    ctx.fillStyle = '#000010';
-    ctx.fillRect(0,0,width,height);
-
-    for(let s of stars){
-        // mover estrelas para cima
-        s.y -= s.speed * (s.z+0.5); // profundidade influencia velocidade
-
-        if(s.y < 0){
-            s.y = height;
-            s.x = Math.random()*width;
-            s.z = Math.random();
-        }
-
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size*(s.z+0.5), 0, Math.PI*2);
-        ctx.fillStyle = `hsl(${Math.random()*360}, 80%, 70%)`;
-        ctx.fill();
+    for(let i=0; i<STAR_COUNT; i++){
+        stars.push({
+            x: Math.random()*width,
+            y: Math.random()*height,
+            z: Math.random(),
+            size: Math.random()*1.5 + 0.5,
+            speed: Math.random()*0.5 + 0.2
+        });
     }
 
-    requestAnimationFrame(draw);
-}
+    function draw(){
+        ctx.fillStyle = '#000010';
+        ctx.fillRect(0,0,width,height);
 
-draw();
+        for(let s of stars){
+            s.y -= s.speed * (s.z + 0.5);
+            if(s.y < 0){
+                s.y = height;
+                s.x = Math.random()*width;
+                s.z = Math.random();
+            }
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.size*(s.z+0.5), 0, Math.PI*2);
+            ctx.fillStyle = `hsl(${Math.random()*360}, 80%, 70%)`;
+            ctx.fill();
+        }
 
-window.addEventListener('resize', ()=>{
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
+        requestAnimationFrame(draw);
+    }
+
+    draw();
+
+    window.addEventListener('resize', ()=>{
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    });
 });
 </script>
 
