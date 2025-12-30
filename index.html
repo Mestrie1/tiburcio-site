@@ -11,12 +11,13 @@ body {
     height: 100vh;
     overflow: hidden;
     font-family: Arial, sans-serif;
+    background: #000;
+    color: #fff;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: radial-gradient(circle at top, #020024, #000);
-    color: #fff;
 }
 
 canvas {
@@ -26,7 +27,7 @@ canvas {
 }
 
 h1 {
-    font-size: 3.8em;
+    font-size: 3.5em;
     letter-spacing: 3px;
     background: linear-gradient(
         270deg,
@@ -38,8 +39,7 @@ h1 {
     animation: rainbow 8s ease infinite;
     text-shadow:
         0 0 15px rgba(255,255,255,0.6),
-        0 0 30px rgba(255,255,255,0.4),
-        0 0 60px rgba(255,255,255,0.2);
+        0 0 30px rgba(255,255,255,0.4);
 }
 
 @keyframes rainbow {
@@ -49,101 +49,93 @@ h1 {
 }
 
 p {
-    margin-top: 20px;
-    font-size: 1.4em;
+    margin: 15px 0 30px;
+    font-size: 1.3em;
     text-shadow: 0 0 10px #fff;
 }
 
 .btn {
-    margin-top: 35px;
     display: inline-block;
-    padding: 15px 35px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #42f5a1, #7f5cff);
+    margin: 8px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    background: #42f5a1;
     color: #000;
     font-weight: bold;
     text-decoration: none;
-    font-size: 1.2em;
+    font-size: 1.1em;
     transition: 0.3s;
 }
 
 .btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 25px #7f5cff;
+    box-shadow: 0 0 20px #42f5a1;
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="space"></canvas>
+<canvas id="vortex"></canvas>
 
-<div>
-    <h1>Mestre Ensinador</h1>
-    <p>Luz • Consciência • Expansão Espiritual</p>
+<h1>Mestre Ensinador</h1>
+<p>Luz • Consciência • Expansão</p>
 
-    <a class="btn" href="https://youtube.com/@mestreensinador1" target="_blank">
-        Canal Oficial
-    </a>
-</div>
+<!-- LINKS MANTIDOS -->
+<a class="btn" href="https://www.facebook.com/share/1Gw1pZ9pqQ/" target="_blank">Facebook</a>
+<a class="btn" href="https://youtube.com/@mestreensinador1.?si=qU9Jg8wpYYC8XIjZ" target="_blank">YouTube</a>
+<a class="btn" href="https://www.instagram.com/mestre_ensinador1?igsh=MWV3OGYwNTVtc3JzeQ==" target="_blank">Instagram</a>
 
 <script>
-const canvas = document.getElementById("space");
+const canvas = document.getElementById("vortex");
 const ctx = canvas.getContext("2d");
 
 let w = canvas.width = window.innerWidth;
 let h = canvas.height = window.innerHeight;
+let cx = w / 2;
+let cy = h / 2;
 
 window.addEventListener("resize", () => {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
+    cx = w / 2;
+    cy = h / 2;
 });
 
 const stars = [];
-const planets = [];
+const STAR_COUNT = 800;
 
-for (let i = 0; i < 400; i++) {
+for (let i = 0; i < STAR_COUNT; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const radius = Math.random() * Math.max(w, h);
     stars.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: Math.random() * 1.5,
-        a: Math.random()
-    });
-}
-
-for (let i = 0; i < 6; i++) {
-    planets.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: 30 + Math.random() * 50,
-        hue: Math.random() * 360,
-        speed: 0.1 + Math.random() * 0.2
+        angle,
+        radius,
+        speed: 0.5 + Math.random() * 1.5,
+        size: Math.random() * 2 + 0.5
     });
 }
 
 function draw() {
-    ctx.fillStyle = "rgba(0,0,20,0.4)";
+    ctx.fillStyle = "rgba(0,0,0,0.3)";
     ctx.fillRect(0, 0, w, h);
 
-    // estrelas
     for (let s of stars) {
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${s.a})`;
-        ctx.fill();
-    }
+        s.angle += 0.01;
+        s.radius -= s.speed;
 
-    // planetas
-    for (let p of planets) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 80%, 60%, 0.9)`;
-        ctx.shadowBlur = 25;
-        ctx.shadowColor = `hsla(${p.hue}, 100%, 70%, 0.8)`;
-        ctx.fill();
+        if (s.radius < 5) {
+            s.radius = Math.max(w, h);
+            s.angle = Math.random() * Math.PI * 2;
+        }
 
-        p.x += p.speed;
-        if (p.x - p.r > w) p.x = -p.r;
+        const x = cx + Math.cos(s.angle) * s.radius;
+        const y = cy + Math.sin(s.angle) * s.radius;
+
+        ctx.beginPath();
+        ctx.arc(x, y, s.size, 0, Math.PI * 2);
+        ctx.fillStyle = "#fff";
+        ctx.fill();
     }
 
     requestAnimationFrame(draw);
