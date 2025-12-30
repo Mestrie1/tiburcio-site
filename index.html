@@ -1,10 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <title>$Tiburcio</title>
-
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -15,7 +13,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-family: Arial, sans-serif;
+        font-family: 'Arial', sans-serif;
         background: radial-gradient(circle at top, #080b1d, #000);
         overflow: hidden;
         color: #f5e042;
@@ -61,9 +59,46 @@
         background: #f5e042;
         box-shadow: 0 0 15px #42f5a1;
     }
+
+    .contract-box {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #contractText {
+        font-size: 1.2em;
+        padding: 12px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: #42f5a1;
+        text-shadow: 0 0 6px #42f5a1;
+        word-break: break-all;
+        max-width: 90%;
+        text-align: center;
+    }
+
+    #copyBtn {
+        padding: 12px 25px;
+        border: none;
+        background: #42f5a1;
+        font-size: 1.1em;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        color: #000;
+        transition: 0.3s;
+    }
+
+    #copyBtn:hover {
+        background: #f5e042;
+        box-shadow: 0 0 12px #42f5a1;
+    }
 </style>
 </head>
-
 <body>
 
 <canvas id="bgCanvas"></canvas>
@@ -71,16 +106,25 @@
 <h1>Bem-vindo ao site oficial do $Tiburcio</h1>
 <p>Luz, energia positiva e comunidade espiritual.</p>
 
-<!-- Redes oficiais -->
-<a class="btn" href="https://www.tiktok.com/@mestreensinador?_r=1&_t=ZS-91Twdwh4uH7" target="_blank">
-    TikTok Oficial
-</a>
+<!-- Botões principais -->
+<a class="btn" href="https://www.facebook.com/share/1Gw1pZ9pqQ/" target="_blank">Facebook</a>
+<a class="btn" href="https://youtube.com/@mestreensinador1.?si=qU9Jg8wpYYC8XIjZ" target="_blank">YouTube</a>
+<a class="btn" href="https://x.com/metsre2255" target="_blank">X Oficial</a>
 
-<a class="btn" href="https://www.instagram.com/mestre_ensinador1?igsh=MWV3OGYwNTVtc3JzeQ==" target="_blank">
-    Instagram Oficial
-</a>
+<!-- Contrato -->
+<div class="contract-box">
+    <div id="contractText">BBogUQD1TjEQrXeUjJRGft7hLB7EEVmTwanEsoPmpump</div>
+    <button id="copyBtn" onclick="copyContract()">Copiar Contrato</button>
+</div>
 
 <script>
+function copyContract() {
+    const text = document.getElementById("contractText").innerText;
+    navigator.clipboard.writeText(text);
+    alert("Contrato copiado!");
+}
+
+// Fundo animado de estrelas
 window.addEventListener('load', () => {
     const canvas = document.getElementById('bgCanvas');
     const ctx = canvas.getContext('2d');
@@ -91,31 +135,30 @@ window.addEventListener('load', () => {
     const stars = [];
     const STAR_COUNT = 300;
 
-    for (let i = 0; i < STAR_COUNT; i++) {
+    for(let i=0; i<STAR_COUNT; i++){
         stars.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
+            x: Math.random()*width,
+            y: Math.random()*height,
             z: Math.random(),
-            size: Math.random() * 1.5 + 0.5,
-            speed: Math.random() * 0.5 + 0.2
+            size: Math.random()*1.5 + 0.5,
+            speed: Math.random()*0.5 + 0.2
         });
     }
 
-    function draw() {
+    function draw(){
         ctx.fillStyle = '#000010';
-        ctx.fillRect(0, 0, width, height);
+        ctx.fillRect(0,0,width,height);
 
-        for (let s of stars) {
+        for(let s of stars){
             s.y -= s.speed * (s.z + 0.5);
-            if (s.y < 0) {
+            if(s.y < 0){
                 s.y = height;
-                s.x = Math.random() * width;
+                s.x = Math.random()*width;
                 s.z = Math.random();
             }
-
             ctx.beginPath();
-            ctx.arc(s.x, s.y, s.size * (s.z + 0.5), 0, Math.PI * 2);
-            ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 70%)`;
+            ctx.arc(s.x, s.y, s.size*(s.z+0.5), 0, Math.PI*2);
+            ctx.fillStyle = `hsl(${Math.random()*360}, 80%, 70%)`;
             ctx.fill();
         }
 
@@ -124,7 +167,7 @@ window.addEventListener('load', () => {
 
     draw();
 
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', ()=>{
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
     });
