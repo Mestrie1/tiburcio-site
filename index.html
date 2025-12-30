@@ -2,125 +2,154 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>$Tiburcio</title>
+<title>Mestre Ensinador</title>
+
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-        text-align: center;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Arial', sans-serif;
-        background: radial-gradient(circle at top, #080b1d, #000);
-        overflow: hidden;
-        color: #f5e042;
-    }
+body {
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: radial-gradient(circle at top, #020024, #000);
+    color: #fff;
+}
 
-    canvas#bgCanvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -2;
-    }
+canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+}
 
-    h1 {
-        font-size: 3.5em;
-        text-shadow: 0 0 15px #42f5a1, 0 0 30px #42f5a1;
-        margin-bottom: 20px;
-        letter-spacing: 2px;
-    }
+h1 {
+    font-size: 3.8em;
+    letter-spacing: 3px;
+    background: linear-gradient(
+        270deg,
+        red, orange, yellow, green, cyan, blue, violet, red
+    );
+    background-size: 1600% 1600%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 8s ease infinite;
+    text-shadow:
+        0 0 15px rgba(255,255,255,0.6),
+        0 0 30px rgba(255,255,255,0.4),
+        0 0 60px rgba(255,255,255,0.2);
+}
 
-    p {
-        font-size: 1.5em;
-        margin-bottom: 30px;
-        text-shadow: 0 0 8px #f5e042;
-    }
+@keyframes rainbow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-    .btn {
-        display: inline-block;
-        padding: 15px 30px;
-        margin: 10px;
-        border-radius: 12px;
-        font-weight: bold;
-        text-decoration: none;
-        color: #0a0a0a;
-        background: #42f5a1;
-        font-size: 1.2em;
-        transition: all 0.3s ease;
-    }
+p {
+    margin-top: 20px;
+    font-size: 1.4em;
+    text-shadow: 0 0 10px #fff;
+}
 
-    .btn:hover {
-        transform: scale(1.1);
-        background: #f5e042;
-        box-shadow: 0 0 15px #42f5a1;
-    }
+.btn {
+    margin-top: 35px;
+    display: inline-block;
+    padding: 15px 35px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #42f5a1, #7f5cff);
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px #7f5cff;
+}
 </style>
 </head>
+
 <body>
 
-<canvas id="bgCanvas"></canvas>
+<canvas id="space"></canvas>
 
-<h1>Bem-vindo ao site oficial do $Tiburcio</h1>
-<p>Luz, energia positiva e comunidade espiritual.</p>
+<div>
+    <h1>Mestre Ensinador</h1>
+    <p>Luz • Consciência • Expansão Espiritual</p>
 
-<!-- Botões principais -->
-<a class="btn" href="https://www.facebook.com/share/1Gw1pZ9pqQ/" target="_blank">Facebook</a>
-<a class="btn" href="https://youtube.com/@mestreensinador1.?si=qU9Jg8wpYYC8XIjZ" target="_blank">YouTube</a>
-<a class="btn" href="https://www.instagram.com/mestre_ensinador1?igsh=MWV3OGYwNTVtc3JzeQ==" target="_blank">Instagram</a>
+    <a class="btn" href="https://youtube.com/@mestreensinador1" target="_blank">
+        Canal Oficial
+    </a>
+</div>
 
 <script>
-window.addEventListener('load', () => {
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
+const canvas = document.getElementById("space");
+const ctx = canvas.getContext("2d");
 
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+let w = canvas.width = window.innerWidth;
+let h = canvas.height = window.innerHeight;
 
-    const stars = [];
-    const STAR_COUNT = 300;
-
-    for(let i = 0; i < STAR_COUNT; i++){
-        stars.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            z: Math.random(),
-            size: Math.random() * 1.5 + 0.5,
-            speed: Math.random() * 0.5 + 0.2
-        });
-    }
-
-    function draw(){
-        ctx.fillStyle = '#000010';
-        ctx.fillRect(0, 0, width, height);
-
-        for(let s of stars){
-            s.y -= s.speed * (s.z + 0.5);
-            if(s.y < 0){
-                s.y = height;
-                s.x = Math.random() * width;
-                s.z = Math.random();
-            }
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.size * (s.z + 0.5), 0, Math.PI * 2);
-            ctx.fillStyle = `hsl(${Math.random() * 360}, 80%, 70%)`;
-            ctx.fill();
-        }
-
-        requestAnimationFrame(draw);
-    }
-
-    draw();
-
-    window.addEventListener('resize', () => {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-    });
+window.addEventListener("resize", () => {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
 });
+
+const stars = [];
+const planets = [];
+
+for (let i = 0; i < 400; i++) {
+    stars.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.5,
+        a: Math.random()
+    });
+}
+
+for (let i = 0; i < 6; i++) {
+    planets.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: 30 + Math.random() * 50,
+        hue: Math.random() * 360,
+        speed: 0.1 + Math.random() * 0.2
+    });
+}
+
+function draw() {
+    ctx.fillStyle = "rgba(0,0,20,0.4)";
+    ctx.fillRect(0, 0, w, h);
+
+    // estrelas
+    for (let s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${s.a})`;
+        ctx.fill();
+    }
+
+    // planetas
+    for (let p of planets) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 80%, 60%, 0.9)`;
+        ctx.shadowBlur = 25;
+        ctx.shadowColor = `hsla(${p.hue}, 100%, 70%, 0.8)`;
+        ctx.fill();
+
+        p.x += p.speed;
+        if (p.x - p.r > w) p.x = -p.r;
+    }
+
+    requestAnimationFrame(draw);
+}
+
+draw();
 </script>
 
 </body>
